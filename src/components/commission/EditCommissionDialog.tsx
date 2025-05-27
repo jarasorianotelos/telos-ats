@@ -281,7 +281,7 @@ export default function EditCommissionDialog({
               </div>
 
               {showPaymentForm && (
-                <div className="bg-[#A74D4A] rounded-xl p-4">
+                <div className="bg-[#0085ca] rounded-xl p-4">
                   <div className="space-y-2">
                     <p className="text-sm font-medium">Commission Details</p>
                     {commission.commission_details ? (

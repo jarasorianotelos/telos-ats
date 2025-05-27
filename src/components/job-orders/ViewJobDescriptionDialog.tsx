@@ -138,7 +138,6 @@ const ViewJobDescriptionDialog = ({
                 title="Job Description Preview"
               />
               <div className="flex justify-between items-center">
-              {user?.role === 'administrator' && (
                 <div className="flex items-center space-x-2">
                   <Input
                     type="file"
@@ -155,7 +154,6 @@ const ViewJobDescriptionDialog = ({
                     {isUploading ? "Uploading..." : "Upload New"}
                   </Button>
                 </div>
-                    )}        
                 <Button
                   variant="outline"
                   onClick={() => window.open(jobDescriptionLink, "_blank")}

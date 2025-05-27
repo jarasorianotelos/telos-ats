@@ -45,7 +45,7 @@ interface ClientJobOrdersDialogProps {
 }
 
 const statusColors = {
-  Kickoff: "bg-[#A74D4A] text-white",
+  Kickoff: "bg-[#0085ca] text-white",
   Sourcing: "bg-cyan-100 text-cyan-800",
   "Internal Interview": "bg-purple-100 text-purple-800",
   "Internal Assessment": "bg-indigo-100 text-indigo-800",
@@ -126,7 +126,7 @@ const ClientJobOrdersDialog = ({
         ) : jobOrders.length > 0 ? (
           <div className="mt-4">
             <Table>
-              <TableHeader className="bg-[#A74D4A] text-white font-bold">
+              <TableHeader className="bg-[#0085ca] text-white font-bold">
                 <TableRow>
                   <TableHead className="text-white">Job Title</TableHead>
                   <TableHead className="text-white">Job Budget</TableHead>
@@ -148,7 +148,7 @@ const ClientJobOrdersDialog = ({
                           onOpenChange(false);
                           navigate(`/job-orders/${jobOrder.id}`);
                         }}
-                        className="font-medium text-left hover:text-[#A74D4A] transition-colors"
+                        className="font-medium text-left hover:text-[#0085ca] transition-colors"
                       >
                         {jobOrder.job_title}
                       </button>

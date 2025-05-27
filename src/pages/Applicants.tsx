@@ -257,9 +257,7 @@ export default function Applicants() {
                           )}
                         </TableCell>
                         <TableCell className="text-right">
-                          {(user?.role === "administrator" ||
-                            user?.id === applicant.author_id) && (
-                            <Button
+                              <Button
                               variant="outline"
                               size="sm"
                               className="mr-2"
@@ -270,8 +268,6 @@ export default function Applicants() {
                             >
                               <Pencil className="h-4 w-4" />
                             </Button>
-                          )}
-                          {user?.role === "administrator" && (
                             <Button
                               variant="destructive"
                               size="sm"
@@ -281,7 +277,6 @@ export default function Applicants() {
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
-                          )}
                         </TableCell>
                       </TableRow>
                     ))}

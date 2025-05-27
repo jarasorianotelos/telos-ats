@@ -111,7 +111,7 @@ const JobOrders = () => {
     <div className="flex h-screen">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
+        <Header user={user} />
         <main className="flex-1 overflow-y-auto bg-gray-50 p-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
@@ -159,8 +159,6 @@ const JobOrders = () => {
                     ))}
                   </SelectContent>
                 </Select>
-
-                {user?.role === "administrator" && (
                   <>
                     <div className="flex items-center space-x-2">
                       <Switch
@@ -176,7 +174,6 @@ const JobOrders = () => {
                       New Job
                     </Button>
                   </>
-                )}
               </div>
             </div>
 
@@ -232,7 +229,6 @@ const JobOrders = () => {
                     ? "No job orders match your search criteria."
                     : "No job orders found. Create your first job order to get started."}
                 </p>
-                {user?.role === "administrator" && (
                   <Button
                     className="mt-4"
                     onClick={() => setIsCreateDialogOpen(true)}
@@ -240,7 +236,6 @@ const JobOrders = () => {
                     <Plus className="h-4 w-4 mr-2" />
                     Create Job Order
                   </Button>
-                )}
               </div>
             )}
           </div>

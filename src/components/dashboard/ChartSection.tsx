@@ -167,7 +167,7 @@ const ChartSection = () => {
           <TabsContent value="job-stats" className="h-[300px]">
             {loading ? (
               <div className="h-full flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#A74D4A]"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#0085ca]"></div>
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
@@ -201,7 +201,7 @@ const ChartSection = () => {
           <TabsContent value="applicant-stats" className="h-[300px]">
             {loading ? (
               <div className="h-full flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#A74D4A]"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#0085ca]"></div>
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
@@ -235,7 +235,7 @@ const ChartSection = () => {
           <TabsContent value="completion-stats" className="h-[300px]">
             {loading ? (
               <div className="h-full flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#A74D4A]"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#0085ca]"></div>
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">

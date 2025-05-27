@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { JobOrder, User } from "@/types";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -116,7 +116,7 @@ const AddApplicantDialog = ({
       const fileName = `${timestamp}.${fileExt}`;
       const filePath = `${sanitizedName}/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabaseAdmin.storage
         .from('resumes')
         .upload(filePath, uploadedFile, {
           cacheControl: '3600',
@@ -129,7 +129,7 @@ const AddApplicantDialog = ({
       }
 
       // Get the public URL
-      const { data: { publicUrl } } = supabase.storage
+      const { data: { publicUrl } } = supabaseAdmin.storage
         .from('resumes')
         .getPublicUrl(filePath);
 
@@ -191,7 +191,7 @@ const AddApplicantDialog = ({
         const fileName = `${timestamp}.${fileExt}`;
         const filePath = `${sanitizedName}/${fileName}`;
 
-        const { error: uploadError } = await supabase.storage
+        const { error: uploadError } = await supabaseAdmin.storage
           .from('resumes')
           .upload(filePath, uploadedFile, {
             cacheControl: '3600',
@@ -204,7 +204,7 @@ const AddApplicantDialog = ({
         }
 
         // Get the public URL
-        const { data: { publicUrl } } = supabase.storage
+        const { data: { publicUrl } } = supabaseAdmin.storage
           .from('resumes')
           .getPublicUrl(filePath);
 
@@ -212,7 +212,7 @@ const AddApplicantDialog = ({
       }
       
       // 1. Create the applicant
-      const { data: applicantResult, error: applicantError } = await supabase
+      const { data: applicantResult, error: applicantError } = await supabaseAdmin
         .from("applicants")
         .insert({
           first_name: applicantValues.first_name,
@@ -231,7 +231,7 @@ const AddApplicantDialog = ({
       const applicantId = applicantResult.id;
       
       // 2. Create the job order applicant entry
-      const { error: applicationError } = await supabase
+      const { error: applicationError } = await supabaseAdmin
         .from("joborder_applicant")
         .insert({
           joborder_id: jobOrder.id,

@@ -169,8 +169,7 @@ const Commission = ({ user }: CommissionPageProps) => {
     setFilteredCommissions(filtered);
   }, [searchTerm, commissions]);
 
-  // Update the access control check
-  if (!user || (user.role !== "administrator" && user.role !== "recruiter")) {
+  // Update the access control check 
     return (
       <Layout pageTitle="Access Denied" user={user}>
         <div className="p-6">
@@ -179,7 +178,7 @@ const Commission = ({ user }: CommissionPageProps) => {
         </div>
       </Layout>
     );
-  }
+
 
   return (
     <Layout pageTitle="Commission" user={user}>

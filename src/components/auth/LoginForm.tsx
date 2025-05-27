@@ -114,7 +114,7 @@ const LoginForm = () => {
             <Label htmlFor="password">Password</Label>
             <button
               onClick={handleForgotPassword}
-              className="text-sm text-[#A74D4A] hover:text-[#A74D4A]/90"
+              className="text-sm text-[#0085ca] hover:text-[#0085ca]/90"
             >
               Forgot password?
             </button>
@@ -146,7 +146,7 @@ const LoginForm = () => {
 
         <Button
           type="submit"
-          className="w-full bg-[#A74D4A] hover:bg-[#A74D4A]/90"
+          className="w-full bg-secondary hover:bg-secondary/90"
           disabled={loading}
         >
           {loading ? "Signing in..." : "Sign in"}
@@ -157,7 +157,7 @@ const LoginForm = () => {
         Don't have an account?{" "}
         <Link
           to="/register"
-          className="font-medium text-[#A74D4A] hover:text-[#A74D4A]/90"
+          className="font-medium text-[#0085ca] hover:text-[#0085ca]/90"
         >
           Register now
         </Link>

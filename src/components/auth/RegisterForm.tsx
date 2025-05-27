@@ -65,7 +65,7 @@ const RegisterForm = () => {
           first_name: formData.first_name || "",
           last_name: formData.last_name || "",
           username,
-          role: "recruiter", // Default role for new users
+          role: "Administrator", // Default role for new users
         }
       );
 
@@ -215,9 +215,7 @@ const RegisterForm = () => {
           </div>
         </div>
         
-        <p className="text-xs text-gray-500">
-          Your username will be automatically generated (e.g. Recruiter01, Recruiter02)
-        </p>
+       
         
         <Button type="submit" className="w-full mt-2" disabled={loading}>
           {loading ? "Creating Account..." : "Create Account"}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { signOut, updateUserProfile } from "@/lib/supabase";
+import { signOut, updateUserProfile, getUserProfile } from "@/lib/supabase";
 import { toast } from "@/components/ui/use-toast";
 import { User } from "@/types";
 import { LogOut, Settings, User as UserIcon, Inbox } from "lucide-react";
@@ -35,11 +35,22 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   const navigate = useNavigate();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [profileData, setProfileData] = useState({
-    first_name: user?.first_name || "",
-    last_name: user?.last_name || "",
-    email: user?.email || "",
+    first_name: authUser?.first_name || user?.first_name || "",
+    last_name: authUser?.last_name || user?.last_name || "",
+    email: authUser?.email || user?.email || "",
   });
   const [isUpdating, setIsUpdating] = useState(false);
+
+  // Update profile data when user changes
+  useEffect(() => {
+    if (authUser) {
+      setProfileData({
+        first_name: authUser.first_name || "",
+        last_name: authUser.last_name || "",
+        email: authUser.email || "",
+      });
+    }
+  }, [authUser]);
 
   const handleSignOut = async () => {
     try {
@@ -65,6 +76,10 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
 
     setIsUpdating(true);
     try {
+      const { data: userData, error: fetchError } = await getUserProfile(user.id);
+      
+      if (fetchError) throw fetchError;
+
       const { error } = await updateUserProfile(user.id, {
         first_name: profileData.first_name,
         last_name: profileData.last_name,
@@ -72,6 +87,15 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
       });
 
       if (error) throw error;
+
+      // Update the local user state with new data
+      if (userData) {
+        setProfileData({
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          email: userData.email
+        });
+      }
 
       toast({
         title: "Profile updated",
@@ -97,16 +121,13 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
     <header className="bg-white border-b border-gray-200 px-4 py-4 flex justify-between items-center">
       <div>
         <h1 className="text-2xl font-bold text-gray-800">
-          Welcome, {user?.first_name || "User"}!
+          Welcome, {authUser?.first_name || user?.first_name || "User"}!
         </h1>
       </div>
 
       <div className="flex items-center gap-4">
         <RecentUpdatesDialog />
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">
-            {user?.username || "User"}
-          </h1>
+        <div>          
         </div>
 
         <div>

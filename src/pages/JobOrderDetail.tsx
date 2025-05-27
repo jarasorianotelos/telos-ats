@@ -240,7 +240,7 @@ const JobOrderDetail = () => {
 
   const getStatusColor = (status: string): string => {
     const statusColors: Record<string, string> = {
-      Kickoff: "bg-[#A74D4A] text-white",
+      Kickoff: "bg-[#0085ca] text-white",
       Sourcing: "bg-cyan-100 text-cyan-800",
       "Internal Interview": "bg-purple-100 text-purple-800",
       "Internal Assessment": "bg-indigo-100 text-indigo-800",
@@ -791,7 +791,6 @@ const JobOrderDetail = () => {
                         <p className="text-sm font-medium text-muted-foreground">
                           Notes / Updates
                         </p>
-                        {user?.role === 'administrator' && (
                         <EditNotesDialog
                           jobOrderId={jobOrder.id}
                           currentNotes={jobOrder.updates || ""}
@@ -799,14 +798,12 @@ const JobOrderDetail = () => {
                             fetchJobOrderDetails();
                           }}
                         />
-                        )}
                       </div>
                       <p>{jobOrder.updates || "Not specified"}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              {user?.role === "administrator" && (
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg">Client Details</CardTitle>
@@ -818,8 +815,8 @@ const JobOrderDetail = () => {
                           Name
                         </p>
                         <p>
-                          {jobOrder.clients.first_name}{" "}
-                          {jobOrder.clients.last_name}
+                          {jobOrder.clients?.first_name || "N/A"}{" "}
+                          {jobOrder.clients?.last_name || ""}
                         </p>
                       </div>
 
@@ -827,24 +824,24 @@ const JobOrderDetail = () => {
                         <p className="text-sm font-medium text-muted-foreground">
                           Company
                         </p>
-                        <p>{jobOrder.clients.company}</p>
+                        <p>{jobOrder.clients?.company || "N/A"}</p>
                       </div>
 
                       <div>
                         <p className="text-sm font-medium text-muted-foreground">
                           Position
                         </p>
-                        <p>{jobOrder.clients.position}</p>
+                        <p>{jobOrder.clients?.position || "N/A"}</p>
                       </div>
 
                       <div>
                         <p className="text-sm font-medium text-muted-foreground">
                           Email
                         </p>
-                        <p className="truncate">{jobOrder.clients.email}</p>
+                        <p className="truncate">{jobOrder.clients?.email || "N/A"}</p>
                       </div>
 
-                      {jobOrder.clients.phone && (
+                      {jobOrder.clients?.phone && (
                         <div>
                           <p className="text-sm font-medium text-muted-foreground">
                             Phone
@@ -855,7 +852,6 @@ const JobOrderDetail = () => {
                     </div>
                   </CardContent>
                 </Card>
-              )}
             </div>
 
             <Card>
@@ -881,7 +877,7 @@ const JobOrderDetail = () => {
               <CardContent>
                 {applicants.length > 0 ? (
                   <Table>
-                    <TableHeader className="bg-[#A74D4A] text-white font-bold">
+                    <TableHeader className="bg-[#0085ca] text-white font-bold">
                       <TableRow>
                         <TableHead className="text-start  text-white font-bold">
                           Endorsed by
@@ -916,11 +912,10 @@ const JobOrderDetail = () => {
                         <TableHead className="text-center  text-white font-bold">
                           Candidate Start Date
                         </TableHead>
-                        {user?.role === "administrator" && (
                           <TableHead className="text-center  text-white font-bold">
                             Edit
                           </TableHead>
-                        )}
+
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -1155,8 +1150,6 @@ const JobOrderDetail = () => {
                               applicant.candidate_start_date || "N/A"
                             )}
                           </TableCell>
-
-                          {user?.role === "administrator" && (
                             <TableCell className="text-right">
                               <div className="flex justify-end gap-2">
                                 {isEditing &&
@@ -1192,7 +1185,6 @@ const JobOrderDetail = () => {
                                 )}
                               </div>
                             </TableCell>
-                          )}
                         </TableRow>
                       ))}
                     </TableBody>

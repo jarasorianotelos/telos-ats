@@ -93,10 +93,8 @@ export default function CommissionTable({
             <TableHead>Commission Details</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Updated Date</TableHead>
-            {user?.role === 'administrator' && (
             <TableHead>Actions</TableHead>
-            )}
-          </TableRow>
+            </TableRow>
         </TableHeader>
         <TableBody>
           {commissions.map((commission) => (
@@ -155,7 +153,6 @@ export default function CommissionTable({
               </TableCell>
               <TableCell>{commission.status || "N/A"}</TableCell>
               <TableCell>{formatDateToEST(commission.updated_at)}</TableCell>
-              {user?.role === 'administrator' && (
               <TableCell>                
                 <Button
                   variant="ghost"
@@ -171,8 +168,7 @@ export default function CommissionTable({
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
-              </TableCell>
-              )}
+              </TableCell>     
             </TableRow>
           ))}
         </TableBody>

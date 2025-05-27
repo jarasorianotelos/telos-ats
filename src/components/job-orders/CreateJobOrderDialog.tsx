@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@/types";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabaseAdmin } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
 import {
   Dialog,
@@ -123,62 +123,65 @@ const CreateJobOrderDialog = ({
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (!user) {
-      toast({
-        title: "Error",
-        description: "You must be logged in to create a job order.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     try {
       setIsLoading(true);
-
       let jobDescriptionUrl = null;
 
+      // Upload job description if provided
       if (uploadedFile) {
-        const fileExt = uploadedFile.name.split(".").pop();
+        const fileExt = uploadedFile.name.split('.').pop();
         const fileName = `${Math.random()}.${fileExt}`;
         const filePath = `${fileName}`;
 
-        const { error: uploadError } = await supabase.storage
-          .from("job-descriptions")
+        const { error: uploadError } = await supabaseAdmin.storage
+          .from('job-descriptions')
           .upload(filePath, uploadedFile);
 
-        if (uploadError) throw uploadError;
+        if (uploadError) {
+          console.error('Error uploading file:', uploadError);
+          throw uploadError;
+        }
 
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from("job-descriptions").getPublicUrl(filePath);
+        const { data: { publicUrl } } = supabaseAdmin.storage
+          .from('job-descriptions')
+          .getPublicUrl(filePath);
 
         jobDescriptionUrl = publicUrl;
       }
 
-      const { error } = await supabase.from("joborder").insert({
-        job_title: values.job_title,
-        client_id: values.client_id,
-        priority: values.priority,
-        author_id: user.id,
-        status: values.status,
-        job_description: jobDescriptionUrl,
-        schedule: values.schedule || null,
-        client_budget: values.client_budget || null,
-        sourcing_preference: sourcingPreferences,
-      });
+      // Create job order using admin client
+      const { error: insertError } = await supabaseAdmin
+        .from('joborder')
+        .insert({
+          job_title: values.job_title,
+          client_id: values.client_id,
+          priority: values.priority,
+          status: values.status,
+          job_description: jobDescriptionUrl,
+          schedule: values.schedule,
+          client_budget: values.client_budget,
+          sourcing_preference: sourcingPreferences,
+          author_id: user?.id,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        });
 
-      if (error) throw error;
+      if (insertError) {
+        console.error('Error creating job order:', insertError);
+        throw insertError;
+      }
 
       toast({
         title: "Success",
-        description: "Job order created successfully!",
+        description: "Job order created successfully",
       });
 
+      onOpenChange(false);
       onSuccess();
       form.reset();
       setUploadedFile(null);
     } catch (error) {
-      console.error("Error creating job order:", error);
+      console.error('Error creating job order:', error);
       toast({
         title: "Error",
         description: "Failed to create job order. Please try again.",

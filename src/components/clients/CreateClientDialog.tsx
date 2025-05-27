@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@/types";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin, syncUserData } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -62,7 +61,11 @@ const CreateClientDialog = ({
     try {
       setIsLoading(true);
       
-      const { error } = await supabase.from("clients").insert({
+      // Sync user data first
+      await syncUserData(user.id);
+      
+      // Now create the client
+      const { error } = await supabaseAdmin.from("clients").insert({
         first_name: values.first_name,
         last_name: values.last_name,
         company: values.company,
@@ -71,6 +74,8 @@ const CreateClientDialog = ({
         phone: values.phone || null,
         location: values.location || null,
         author_id: user.id,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       });
       
       if (error) throw error;

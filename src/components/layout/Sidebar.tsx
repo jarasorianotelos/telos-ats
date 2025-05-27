@@ -26,15 +26,15 @@ const Sidebar = () => {
   const isAdmin = user?.role === "administrator";
 
   const navigation = [
-    { name: "Dashboard", href: "/", icon: LayoutDashboard, adminOnly: true },
+    { name: "Dashboard", href: "/", icon: LayoutDashboard},
     { name: "Job Orders", href: "/job-orders", icon: Briefcase },
     { name: "Favorites", href: "/favorites", icon: Star },
     { name: "Candidates", href: "/applicants", icon: FileText },
     { name: "Pipeline", href: "/pipeline", icon: Trello },
     { name: "Commission", href: "/commission", icon: DollarSign },
-    { name: "Users", href: "/users", icon: Users, adminOnly: true },
-    { name: "Clients", href: "/clients", icon: Building2, adminOnly: true },
-    { name: "Logs", href: "/logs", icon: ClipboardList, adminOnly: true },
+    // { name: "Users", href: "/users", icon: Users},
+    { name: "Clients", href: "/clients", icon: Building2},
+    { name: "Logs", href: "/logs", icon: ClipboardList},
   ];
 
   return (
@@ -44,7 +44,7 @@ const Sidebar = () => {
         collapsed ? "w-[70px]" : "w-64"
       )}
     >
-      <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
+      <div className="bg-[#0085ca] flex items-center justify-between h-16 px-4 border-b border-gray-200">
         <div
           className={cn(
             "flex items-center transition-all duration-300",
@@ -52,18 +52,18 @@ const Sidebar = () => {
           )}
         >
           {!collapsed && (
-            <span className="text-xl font-bold text-[#A74D4A]">
+            <span className="bg-text-xl font-bold text-[#0085ca]">
               <img
-                src="https://wnywlwahimhlfnxmwhsu.supabase.co/storage/v1/object/public/images//Roster%20Logo.png"
+                src="https://usobbytqipduqxqqxuit.supabase.co/storage/v1/object/public/images//logo.png"
                 alt="Roster Logo"
                 className="w-40 "
               />
             </span>
           )}
           {collapsed && (
-            <span className="text-xl font-bold  text-[#A74D4A]">
+            <span className="text-xl font-bold  text-[#0085ca]">
               <img
-                src="https://wnywlwahimhlfnxmwhsu.supabase.co/storage/v1/object/public/images//R%20Logo%20(white).png"
+                src="https://usobbytqipduqxqqxuit.supabase.co/storage/v1/object/public/images//icon%20(white).png"
                 alt="Roster Logo"
                 className="w-10 "
               />
@@ -92,9 +92,6 @@ const Sidebar = () => {
         <div className="px-3 py-4">
           <nav className="space-y-1">
             {navigation.map((item) => {
-              // Skip admin-only items for non-admin users
-              if (item.adminOnly && !isAdmin) return null;
-
               const isActive = location.pathname === item.href;
 
               return (
@@ -104,7 +101,7 @@ const Sidebar = () => {
                   className={cn(
                     "flex items-center px-2 py-2 rounded-md text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-ats-blue-50 text-[#A74D4A]"
+                      ? "bg-ats-blue-50 text-[#0085ca]"
                       : "text-gray-700 hover:bg-gray-100",
                     collapsed && "justify-center"
                   )}
@@ -112,7 +109,7 @@ const Sidebar = () => {
                   <item.icon
                     className={cn(
                       "flex-shrink-0 h-5 w-5",
-                      isActive ? "text-[#A74D4A]" : "text-gray-500"
+                      isActive ? "text-[#0085ca]" : "text-gray-500"
                     )}
                   />
                   {!collapsed && <span className="ml-3">{item.name}</span>}

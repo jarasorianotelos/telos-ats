@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabaseAdmin } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
 import CreateClientDialog from "@/components/clients/CreateClientDialog";
 import EditClientDialog from "@/components/clients/EditClientDialog";
@@ -95,7 +95,7 @@ export default function Clients() {
   const handleDeleteClient = async (id: string) => {
     try {
       // Soft delete by setting deleted_at
-      const { error } = await supabase
+      const { error } = await supabaseAdmin
         .from("clients")
         .update({
           deleted_at: new Date().toISOString(),
@@ -130,35 +130,13 @@ export default function Clients() {
       client.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // If user is not an admin, redirect or show access denied
-  if (!isAdmin) {
-    return (
-      <div className="flex h-screen">
-        <Sidebar />
-
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Header />
-
-          <main className="flex-1 overflow-y-auto bg-gray-50 p-4">
-            <div className="max-w-7xl mx-auto text-center py-12">
-              <h2 className="text-xl font-semibold mb-2">Access Denied</h2>
-              <p className="text-muted-foreground">
-                You don't have permission to access the Clients Management page.
-                This page is only available to administrators.
-              </p>
-            </div>
-          </main>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex h-screen">
       <Sidebar />
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header  />
+        <Header user={user} />
 
         <main className="flex-1 overflow-y-auto bg-gray-50 p-4">
           <div className="max-w-7xl mx-auto">

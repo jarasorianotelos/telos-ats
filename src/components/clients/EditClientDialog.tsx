@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
 import {
   Dialog,
@@ -65,7 +65,7 @@ const EditClientDialog = ({
     try {
       setIsLoading(true);
 
-      const { error } = await supabase
+      const { error } = await supabaseAdmin
         .from("clients")
         .update({
           ...values,
