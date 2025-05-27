@@ -53,7 +53,7 @@ const CreateUserDialog = ({
       last_name: "",
       email: "",
       username: "",
-      role: "recruiter",
+      role: "administrator",
       password: "",
     },
   });

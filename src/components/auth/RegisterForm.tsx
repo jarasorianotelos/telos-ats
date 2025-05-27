@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signUp, generateUsername } from "@/lib/supabase";
+import { signUp } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -53,9 +53,8 @@ const RegisterForm = () => {
     }
 
     try {
-      // Generate username
-      const username = await generateUsername();
-      console.log("Generated username:", username);
+      // Use first name as username
+      const username = formData.first_name.toLowerCase();
 
       // Register user with Supabase Auth
       const { data, error: signUpError } = await signUp(
@@ -65,7 +64,7 @@ const RegisterForm = () => {
           first_name: formData.first_name || "",
           last_name: formData.last_name || "",
           username,
-          role: "Administrator", // Default role for new users
+          role: "recruiter", // Default role for new users
         }
       );
 
@@ -169,7 +168,7 @@ const RegisterForm = () => {
               type={showPassword ? "text" : "password"}
               value={formData.password}
               onChange={handleChange}
-              placeholder="••••••••"
+              
               required
               className="pl-10"
             />
@@ -197,7 +196,7 @@ const RegisterForm = () => {
               type={showConfirmPassword ? "text" : "password"}
               value={formData.confirm_password}
               onChange={handleChange}
-              placeholder="••••••••"
+              
               required
               className="pl-10"
             />

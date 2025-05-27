@@ -19,8 +19,8 @@ export const signUp = async (email: string, password: string, metadata: { first_
   console.log("Attempting signup with:", { email, metadata });
   try {
     // Validate and normalize the role
-    const validRoles = ['admin', 'recruiter', 'manager', 'user'];
-    const normalizedRole = validRoles.includes(metadata.role) ? metadata.role : 'recruiter';
+    const validRoles = ['recruiter', 'client'];
+    const normalizedRole = validRoles.includes(metadata.role) ? metadata.role : 'administrator';
     
     // First create the user in auth.users using admin client
     const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
@@ -105,44 +105,6 @@ export const getUserCount = async () => {
   return count || 0;
 };
 
-// Generate username
-export const generateUsername = async () => {
-  try {
-    // 1. Get all usernames that start with 'recruiter'
-    const { data: users, error } = await supabase
-      .from('users')
-      .select('username')
-      .ilike('username', 'Recruiter%');
-
-    if (error) throw error;
-
-    // 2. Extract numbers from usernames and find the maximum
-    const numbers = users
-      ?.map(user => {
-        // Extract digits after 'recruiter'
-        const match = user.username.toLowerCase().match(/recruiter(\d+)/);
-        return match ? parseInt(match[1]) : 0;
-      })
-      .filter(num => !isNaN(num));
-
-    // 3. Find the maximum number, default to 0 if no numbers found
-    const maxNumber = numbers?.length ? Math.max(...numbers) : 0;
-
-    // 4. Generate new number (max + 2)
-    const newNumber = maxNumber + 2;
-
-    // 5. & 6. Format the new username with padded number
-    const paddedNumber = newNumber.toString().padStart(3, '0');
-    const newUsername = `Recruiter${paddedNumber}`;
-
-    return newUsername;
-  } catch (error) {
-    console.error('Error generating username:', error);
-    // Fallback username in case of error
-    return `Recruiter${Date.now().toString().slice(-3)}`;
-  }
-};
-
 // Get user profile data directly from auth.users to avoid RLS issues
 export const getUserProfile = async (userId: string) => {
   try {
@@ -167,7 +129,7 @@ export const getUserProfile = async (userId: string) => {
         first_name: authUser.user.user_metadata.first_name || '',
         last_name: authUser.user.user_metadata.last_name || '',
         username: authUser.user.user_metadata.username || '',
-        role: authUser.user.user_metadata.role || 'recruiter',
+        role: authUser.user.user_metadata.role || 'administrator',
         created_at: authUser.user.created_at,
         updated_at: null,
         deleted_at: null
@@ -215,7 +177,7 @@ export const syncUserData = async (userId: string) => {
           first_name: authUser.user.user_metadata.first_name || '',
           last_name: authUser.user.user_metadata.last_name || '',
           username: authUser.user.user_metadata.username || '',
-          role: authUser.user.user_metadata.role || 'recruiter',
+          role: authUser.user.user_metadata.role || 'administrator',
           created_at: authUser.user.created_at,
           updated_at: new Date().toISOString(),
         });
@@ -230,7 +192,7 @@ export const syncUserData = async (userId: string) => {
           first_name: authUser.user.user_metadata.first_name || '',
           last_name: authUser.user.user_metadata.last_name || '',
           username: authUser.user.user_metadata.username || '',
-          role: authUser.user.user_metadata.role || 'recruiter',
+          role: authUser.user.user_metadata.role || 'administrator',
           updated_at: new Date().toISOString(),
         })
         .eq('id', userId);
@@ -271,7 +233,7 @@ export const syncAllUsers = async () => {
             first_name: authUser.user_metadata.first_name || '',
             last_name: authUser.user_metadata.last_name || '',
             username: authUser.user_metadata.username || '',
-            role: authUser.user_metadata.role || 'recruiter',
+            role: authUser.user_metadata.role || 'administrator',
             created_at: authUser.created_at,
             updated_at: new Date().toISOString(),
           });
@@ -288,7 +250,7 @@ export const syncAllUsers = async () => {
             first_name: authUser.user_metadata.first_name || '',
             last_name: authUser.user_metadata.last_name || '',
             username: authUser.user_metadata.username || '',
-            role: authUser.user_metadata.role || 'recruiter',
+            role: authUser.user_metadata.role || 'administrator',
             updated_at: new Date().toISOString(),
           })
           .eq('id', authUser.id);

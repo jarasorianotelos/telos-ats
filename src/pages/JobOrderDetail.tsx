@@ -586,7 +586,7 @@ const JobOrderDetail = () => {
   if (loading) {
     return (
       <div className="flex h-screen">
-        <Sidebar user={user} />
+        <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header user={user} />
           <main className="flex-1 overflow-y-auto bg-gray-50 p-4">
@@ -606,7 +606,7 @@ const JobOrderDetail = () => {
   if (!jobOrder) {
     return (
       <div className="flex h-screen">
-        <Sidebar user={user} />
+        <Sidebar  />
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header user={user} />
           <main className="flex-1 overflow-y-auto bg-gray-50 p-4">
@@ -631,7 +631,7 @@ const JobOrderDetail = () => {
 
   return (
     <div className="flex h-screen">
-      <Sidebar user={user} />
+      <Sidebar />
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header user={user} />
@@ -927,7 +927,7 @@ const JobOrderDetail = () => {
                                 {applicant.author
                                   ? user?.role === "administrator"
                                     ? `${applicant.author.first_name} ${applicant.author.last_name}`
-                                    : applicant.author.username
+                                    : applicant.author.first_name + " " + applicant.author.last_name
                                   : "N/A"}
                               </p>
                               <p className="text-sm text-muted-foreground  text-start">

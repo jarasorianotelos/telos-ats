@@ -127,7 +127,7 @@ export default function Applicants() {
 
   return (
     <div className="flex h-screen">
-      <Sidebar user={user} />
+      <Sidebar  />
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header user={user} />

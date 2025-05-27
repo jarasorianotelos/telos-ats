@@ -32,7 +32,7 @@ const Sidebar = () => {
     { name: "Candidates", href: "/applicants", icon: FileText },
     { name: "Pipeline", href: "/pipeline", icon: Trello },
     { name: "Commission", href: "/commission", icon: DollarSign },
-    // { name: "Users", href: "/users", icon: Users},
+    { name: "Users", href: "/users", icon: Users},
     { name: "Clients", href: "/clients", icon: Building2},
     { name: "Logs", href: "/logs", icon: ClipboardList},
   ];
@@ -40,11 +40,11 @@ const Sidebar = () => {
   return (
     <div
       className={cn(
-        "flex flex-col border-r border-gray-200 bg-white transition-all duration-300 ease-in-out",
+        "flex flex-col border-r border-gray-200 bg-[linear-gradient(131deg,#0085ca_0%,#001a70_99%)] transition-all duration-300 ease-in-out",
         collapsed ? "w-[70px]" : "w-64"
       )}
     >
-      <div className="bg-[#0085ca] flex items-center justify-between h-16 px-4 border-b border-gray-200">
+      <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
         <div
           className={cn(
             "flex items-center transition-all duration-300",
@@ -61,7 +61,7 @@ const Sidebar = () => {
             </span>
           )}
           {collapsed && (
-            <span className="text-xl font-bold  text-[#0085ca]">
+            <span className="text-xl font-bold  bg-[linear-gradient(131deg,#0085ca_0%,#001a70_99%)] ">
               <img
                 src="https://usobbytqipduqxqqxuit.supabase.co/storage/v1/object/public/images//icon%20(white).png"
                 alt="Roster Logo"
@@ -102,14 +102,14 @@ const Sidebar = () => {
                     "flex items-center px-2 py-2 rounded-md text-sm font-medium transition-colors",
                     isActive
                       ? "bg-ats-blue-50 text-[#0085ca]"
-                      : "text-gray-700 hover:bg-gray-100",
+                      : "text-gray-800 hover:bg-gray-300",
                     collapsed && "justify-center"
                   )}
                 >
                   <item.icon
                     className={cn(
                       "flex-shrink-0 h-5 w-5",
-                      isActive ? "text-[#0085ca]" : "text-gray-500"
+                      isActive ? "text-[#0085ca]" : "text-gray-800"
                     )}
                   />
                   {!collapsed && <span className="ml-3">{item.name}</span>}
@@ -121,11 +121,11 @@ const Sidebar = () => {
       </ScrollArea>
 
       {!collapsed && (
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-gray-100">
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
             {user?.role === "administrator" ? "Admin" : "Recruiter"}
           </div>
-          <div className="mt-1 text-sm text-gray-700 font-medium">
+          <div className="mt-1 text-sm text-gray-300 font-medium">
             {`${user?.first_name} ${user?.last_name}`}
           </div>
           <div className="text-xs text-gray-500 truncate">{user?.email}</div>

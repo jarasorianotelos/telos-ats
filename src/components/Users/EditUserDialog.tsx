@@ -54,7 +54,7 @@ const EditUserDialog = ({
       last_name: user.last_name || "",
       email: user.email || "",
       username: user.username || "",
-      role: user.role || "recruiter",
+      role: user.role || "administrator",
     },
   });
 

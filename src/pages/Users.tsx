@@ -85,7 +85,7 @@ export default function Users() {
       <Sidebar />
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
+        <Header user={user} />
 
         <main className="flex-1 overflow-y-auto bg-gray-50 p-4">
           <div className="max-w-7xl mx-auto">
@@ -135,7 +135,7 @@ export default function Users() {
                       <TableHead className="text-white">Name</TableHead>
                       <TableHead className="text-white">Email</TableHead>
                       <TableHead className="text-white">Username</TableHead>
-                      <TableHead className="text-white">Role</TableHead>
+                      {/* <TableHead className="text-white">Role</TableHead> */}
                       <TableHead className="text-white">Created At</TableHead>
                       <TableHead className="text-center text-white">
                         Actions
@@ -150,9 +150,9 @@ export default function Users() {
                         </TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.username}</TableCell>
-                        <TableCell className="capitalize">
+                        {/* <TableCell className="capitalize">
                           {user.role}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell>
                           {formatDateToEST(user.created_at)}
                         </TableCell>

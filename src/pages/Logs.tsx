@@ -91,7 +91,7 @@ const Logs = ({ user }: LogsPageProps) => {
   }, [fetchLogs]);
 
   // Ensure only admins can access this page as a double-layer of security
-  if (user?.role !== "administrator") {
+
     return (
       <Layout pageTitle="Access Denied" user={user}>
         <div className="p-6">
@@ -100,7 +100,7 @@ const Logs = ({ user }: LogsPageProps) => {
         </div>
       </Layout>
     );
-  }
+
 
   return (
     <Layout pageTitle="System Logs" user={user}>

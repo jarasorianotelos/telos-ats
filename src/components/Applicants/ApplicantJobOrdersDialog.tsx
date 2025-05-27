@@ -145,7 +145,7 @@ const ApplicantJobOrdersDialog = ({
                         {jobOrder.author ? 
                           user?.role === 'administrator' 
                             ? `${jobOrder.author.first_name} ${jobOrder.author.last_name}`
-                            : jobOrder.author.username
+                            : jobOrder.author.first_name
                           : "N/A"}
                       </div>
                       <div>

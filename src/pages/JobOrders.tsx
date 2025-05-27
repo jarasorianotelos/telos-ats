@@ -194,29 +194,27 @@ const JobOrders = () => {
                 ))}
               </div>
             ) : filteredJobOrders.length > 0 ? (
-              <div className="grid grid-cols-3 gap-6">
-                {["High", "Mid", "Low"].map((priority, index) => {
+              <div className="flex flex-wrap gap-6">
+                {["High", "Mid", "Low"].map((priority) => {
                   const priorityJobs = filteredJobOrders.filter(
                     (job) => job.priority === priority
                   );
+
                   if (priorityJobs.length === 0) return null;
 
                   return (
-                    <div key={priority} className="relative">
-                      {index > 0 && (
-                        <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-200" />
-                      )}
-                      <h3 className="text-lg font-semibold mb-4 capitalize p-2">
-                        {priority} Priority
-                      </h3>
-                      <div className="flex flex-col gap-2 w-full shadow-lg rounded-lg p-3 h-[calc(100vh-234px)] overflow-y-auto">
-                        {priorityJobs.map((job) => (
-                          <JobOrderCard
-                            key={job.id}
-                            jobOrder={job}
-                            onClick={() => handleCardClick(job.id)}
-                          />
-                        ))}
+                    <div key={priority} className="flex-1 min-w-[300px]">
+                      <div className="bg-white rounded-lg shadow p-4">
+                        <h3 className="text-lg font-semibold mb-4">{priority} Priority</h3>
+                        <div className="space-y-4">
+                          {priorityJobs.map((job) => (
+                            <JobOrderCard
+                              key={job.id}
+                              jobOrder={job}
+                              onClick={() => handleCardClick(job.id)}
+                            />
+                          ))}
+                        </div>
                       </div>
                     </div>
                   );
