@@ -33,8 +33,10 @@ const Sidebar = () => {
     { name: "Pipeline", href: "/pipeline", icon: Trello },
     { name: "Commission", href: "/commission", icon: DollarSign },
     { name: "Users", href: "/users", icon: Users},
-    { name: "Clients", href: "/clients", icon: Building2},
-    { name: "Logs", href: "/logs", icon: ClipboardList},
+    ...(isAdmin ? [
+      { name: "Channels", href: "/clients", icon: Building2},
+      { name: "Logs", href: "/logs", icon: ClipboardList},
+    ] : []),
   ];
 
   return (
@@ -61,7 +63,7 @@ const Sidebar = () => {
             </span>
           )}
           {collapsed && (
-            <span className="text-xl font-bold  bg-[linear-gradient(131deg,#0085ca_0%,#001a70_99%)] ">
+            <span className="text-xl font-bold   ">
               <img
                 src="https://usobbytqipduqxqqxuit.supabase.co/storage/v1/object/public/images//icon%20(white).png"
                 alt="Roster Logo"
@@ -75,13 +77,14 @@ const Sidebar = () => {
           size="sm"
           className={cn(
             "p-0 h-6 w-6",
-            collapsed &&
-              "absolute right-0 -mr-3 bg-white border border-gray-200 rounded-full z-10"
+            collapsed
+              ? "absolute right-0 -mr-3 bg-white border border-gray-200 rounded-full z-10"
+              : ""
           )}
           onClick={() => setCollapsed(!collapsed)}
         >
           {collapsed ? (
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 text-gray-800" />
           ) : (
             <ChevronLeft className="h-4 w-4" />
           )}
