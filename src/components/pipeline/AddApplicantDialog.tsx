@@ -38,7 +38,7 @@ export default function AddApplicantDialog({
       let query = supabase
         .from("applicants")
         .select("*")
-        .eq("author_id", user?.id);
+        
 
       if (searchQuery) {
         query = query.or(

@@ -302,7 +302,7 @@ const CreateApplicantDialog = ({
                 Cancel
               </Button>
               <Button type="submit" disabled={isLoading || isUploading}>
-                {isLoading ? "Creating..." : "Create Applicant"}
+                {isLoading ? "Creating..." : "Save"}
               </Button>
             </DialogFooter>
           </form>
